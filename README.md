@@ -27,8 +27,8 @@ The application features a dark theme UI with responsive design and interactive 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/pgagi-dashboard.git
-   cd pgagi-dashboard
+   git clone https://github.com/dharaneesh2574/pgagi-analytics-dashboard.git
+   cd pgagi-analytics-dashboard
    ```
 
 2. Install dependencies:
@@ -73,6 +73,13 @@ The application is deployed using Vercel with GitHub Actions for CI/CD:
 
 - **Production**: Deploys automatically on pushes to the main branch
 - **Preview**: Deploys automatically on pushes to other branches
+
+### Live Application
+The dashboard is live at: [PGAGI Dashboard](https://pgagi-dashboard-9gsip2zuy-dharaneeshs-projects-becc7bb0.vercel.app)
+
+### Important Notes
+- The News API integration requires a paid subscription for CORS access. The free tier only works with server-side requests, which is not implemented in this version.
+- Weather and Finance features are fully functional with their respective free API tiers.
 
 ### Deployment Environment Variables
 
