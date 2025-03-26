@@ -11,7 +11,7 @@ interface NewsCardProps {
 
 export default function NewsCard({ article, onReadMore }: NewsCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
       {article.urlToImage && (
         <img
           src={article.urlToImage}
@@ -21,24 +21,22 @@ export default function NewsCard({ article, onReadMore }: NewsCardProps) {
       )}
       <div className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-gray-500">{article.source.name}</span>
-          <span className="text-sm text-gray-500">{formatDate(article.publishedAt)}</span>
+          <span className="text-sm text-gray-300">{article.source.name}</span>
+          <span className="text-sm text-gray-300">{formatDate(article.publishedAt)}</span>
         </div>
-        <h3 className="text-xl font-bold mb-2 text-black">{article.title}</h3>
+        <h3 className="text-lg font-semibold mb-2 text-white">{article.title}</h3>
         {article.description && (
-          <p className="text-gray-600 mb-4">{article.description}</p>
+          <p className="text-gray-300 mb-4">{article.description}</p>
         )}
-        <div className="flex justify-between items-center">
-          {article.author && (
-            <span className="text-sm text-gray-500">By {article.author}</span>
-          )}
-          <button
-            onClick={() => onReadMore(article)}
-            className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors"
-          >
-            Read More
-          </button>
-        </div>
+        {article.author && (
+          <p className="text-sm text-gray-400 mb-4">By {article.author}</p>
+        )}
+        <button
+          onClick={() => onReadMore(article)}
+          className="w-full bg-white text-black py-2 rounded-lg hover:bg-gray-200 transition-colors"
+        >
+          Read More
+        </button>
       </div>
     </div>
   );

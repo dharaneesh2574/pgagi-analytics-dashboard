@@ -88,21 +88,21 @@ export default function FinancePage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search for a stock symbol (e.g., AAPL, MSFT)..."
-            className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Search for a stock symbol (e.g., TSLA, Tata Motors)"
+            className="w-full p-3 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-black text-white placeholder-gray-400"
           />
           {searchLoading && (
             <div className="absolute right-3 top-3">
-              <div className="animate-spin h-5 w-5 border-2 border-black rounded-full border-t-transparent"></div>
+              <div className="animate-spin h-5 w-5 border-2 border-white rounded-full border-t-transparent"></div>
             </div>
           )}
           {error && (
-            <div className="absolute left-0 right-0 mt-1 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <div className="absolute left-0 right-0 mt-1 bg-red-900 border border-red-700 text-white px-4 py-3 rounded">
               {error}
             </div>
           )}
           {Array.isArray(searchResults) && searchResults.length > 0 && (
-            <div className="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg max-h-96 overflow-y-auto">
+            <div className="absolute z-10 w-full mt-1 bg-black border border-gray-700 rounded-lg shadow-lg max-h-96 overflow-y-auto">
               {searchResults.map((result) => (
                 <button
                   key={result['1. symbol']}
@@ -111,7 +111,7 @@ export default function FinancePage() {
                     setSearchQuery(result['1. symbol']);
                     setSearchResults([]);
                   }}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                  className="w-full text-left px-4 py-2 hover:bg-gray-800 cursor-pointer text-white"
                 >
                   {result['1. symbol']} - {result['2. name']}
                 </button>
@@ -130,8 +130,8 @@ export default function FinancePage() {
                 onClick={() => setTimeInterval(interval as TimeInterval)}
                 className={`px-4 py-2 rounded-full capitalize ${
                   timeInterval === interval
-                    ? 'bg-black text-white'
-                    : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                    ? 'bg-white text-black'
+                    : 'bg-gray-800 text-white hover:bg-gray-700'
                 }`}
               >
                 {interval}
@@ -141,41 +141,43 @@ export default function FinancePage() {
 
           {stockQuote && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow">
-                <h3 className="text-sm text-gray-500">Current Price</h3>
-                <p className="text-2xl font-bold">${parseFloat(stockQuote['05. price']).toFixed(2)}</p>
+              <div className="bg-gray-900 p-4 rounded-lg shadow">
+                <h3 className="text-sm text-gray-300">Current Price</h3>
+                <p className="text-2xl font-bold text-white">${parseFloat(stockQuote['05. price']).toFixed(2)}</p>
               </div>
-              <div className="bg-white p-4 rounded-lg shadow">
-                <h3 className="text-sm text-gray-500">Change</h3>
+              <div className="bg-gray-900 p-4 rounded-lg shadow">
+                <h3 className="text-sm text-gray-300">Change</h3>
                 <p className={`text-2xl font-bold ${
-                  parseFloat(stockQuote['09. change']) >= 0 ? 'text-green-600' : 'text-red-600'
+                  parseFloat(stockQuote['09. change']) >= 0 ? 'text-green-400' : 'text-red-400'
                 }`}>
                   {stockQuote['09. change']} ({stockQuote['10. change percent']})
                 </p>
               </div>
-              <div className="bg-white p-4 rounded-lg shadow">
-                <h3 className="text-sm text-gray-500">High</h3>
-                <p className="text-2xl font-bold">${parseFloat(stockQuote['03. high']).toFixed(2)}</p>
+              <div className="bg-gray-900 p-4 rounded-lg shadow">
+                <h3 className="text-sm text-gray-300">High</h3>
+                <p className="text-2xl font-bold text-white">${parseFloat(stockQuote['03. high']).toFixed(2)}</p>
               </div>
-              <div className="bg-white p-4 rounded-lg shadow">
-                <h3 className="text-sm text-gray-500">Low</h3>
-                <p className="text-2xl font-bold">${parseFloat(stockQuote['04. low']).toFixed(2)}</p>
+              <div className="bg-gray-900 p-4 rounded-lg shadow">
+                <h3 className="text-sm text-gray-300">Low</h3>
+                <p className="text-2xl font-bold text-white">${parseFloat(stockQuote['04. low']).toFixed(2)}</p>
               </div>
             </div>
           )}
 
           {timeSeriesData && (
-            <StockChart
-              data={timeSeriesData[`Time Series (${timeInterval === 'daily' ? 'Daily' : timeInterval})`] ?? null}
-              title={`${selectedStock['1. symbol']} Stock Price`}
-            />
+            <div className="bg-gray-900 p-4 rounded-lg shadow">
+              <StockChart
+                data={timeSeriesData[`Time Series (${timeInterval === 'daily' ? 'Daily' : timeInterval})`] ?? null}
+                title={`${selectedStock['1. symbol']} Stock Price`}
+              />
+            </div>
           )}
         </div>
       )}
 
       {loading && (
         <div className="flex justify-center items-center py-8">
-          <div className="animate-spin h-8 w-8 border-4 border-black rounded-full border-t-transparent"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-white rounded-full border-t-transparent"></div>
         </div>
       )}
     </div>

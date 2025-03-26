@@ -34,8 +34,8 @@ interface StockChartProps {
 export default function StockChart({ data, title }: StockChartProps) {
   if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
     return (
-      <div className="w-full h-[400px] bg-white p-4 rounded-lg shadow flex items-center justify-center">
-        <p className="text-gray-500">No data available</p>
+      <div className="w-full h-[400px] bg-gray-900 p-4 rounded-lg shadow flex items-center justify-center">
+        <p className="text-gray-300">No data available</p>
       </div>
     );
   }
@@ -50,8 +50,8 @@ export default function StockChart({ data, title }: StockChartProps) {
         {
           label: 'Stock Price',
           data: prices,
-          borderColor: 'rgb(75, 192, 192)',
-          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgb(59, 130, 246)',
+          backgroundColor: 'rgba(59, 130, 246, 0.5)',
           tension: 0.1,
         },
       ],
@@ -62,28 +62,49 @@ export default function StockChart({ data, title }: StockChartProps) {
       plugins: {
         legend: {
           position: 'top' as const,
+          labels: {
+            color: 'white',
+          },
         },
         title: {
           display: true,
           text: title,
+          color: 'white',
+          font: {
+            size: 16,
+          },
         },
       },
       scales: {
         y: {
           beginAtZero: false,
+          grid: {
+            color: 'rgba(255, 255, 255, 0.1)',
+          },
+          ticks: {
+            color: 'white',
+          },
+        },
+        x: {
+          grid: {
+            color: 'rgba(255, 255, 255, 0.1)',
+          },
+          ticks: {
+            color: 'white',
+          },
         },
       },
     };
 
     return (
-      <div className="w-full h-[400px] bg-white p-4 rounded-lg shadow">
+      <div className="w-full h-[400px] bg-gray-900 p-4 rounded-lg shadow">
         <Line data={chartData} options={options} />
       </div>
     );
   } catch (error) {
     return (
-      <div className="w-full h-[400px] bg-white p-4 rounded-lg shadow flex items-center justify-center">
-        <p className="text-gray-500">Error displaying chart data</p>
+      <div className="w-full h-[400px] bg-gray-900 p-4 rounded-lg shadow flex items-center justify-center">
+        <p className="text-gray-300">Error displaying chart data</p>
       </div>
     );
   }

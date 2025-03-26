@@ -12,9 +12,9 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="w-64 h-screen bg-gray-800 text-white fixed left-0 top-0 p-4">
+    <div className="w-64 h-screen bg-black text-white fixed left-0 top-0 p-4 border-r border-gray-800">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold">PGAGI Dashboard</h1>
+        <h1 className="text-2xl font-bold text-white">PGAGI Dashboard</h1>
       </div>
       <nav>
         <ul className="space-y-2">
@@ -24,8 +24,8 @@ export default function Sidebar() {
                 href={item.path}
                 className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
                   pathname === item.path
-                    ? 'bg-blue-600 text-white'
-                    : 'hover:bg-gray-700'
+                    ? 'bg-gray-900 text-white'
+                    : 'hover:bg-gray-900'
                 }`}
               >
                 <span className="text-xl">{item.icon}</span>

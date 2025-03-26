@@ -38,21 +38,21 @@ export default function CitySearch({ onCitySelect }: CitySearchProps) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for a city..."
-        className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-black text-white placeholder-gray-400"
       />
       
       {isLoading && (
         <div className="absolute right-3 top-3">
-          <div className="animate-spin h-5 w-5 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+          <div className="animate-spin h-5 w-5 border-2 border-white rounded-full border-t-transparent"></div>
         </div>
       )}
 
       {cities.length > 0 && (
-        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
+        <ul className="absolute z-10 w-full mt-1 bg-black border border-gray-700 rounded-lg shadow-lg max-h-60 overflow-auto">
           {cities.map((city, index) => (
             <li
               key={`${city.lat}-${city.lon}-${index}`}
-              className="p-3 hover:bg-gray-100 cursor-pointer"
+              className="p-3 hover:bg-gray-800 cursor-pointer text-white"
               onClick={() => {
                 onCitySelect(city);
                 setQuery('');

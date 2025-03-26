@@ -112,7 +112,7 @@ export default function NewsPage() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search news..."
-          className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
+          className="w-full p-3 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-black text-white placeholder-gray-400 mb-4"
         />
         <div className="flex flex-wrap gap-2">
           {CATEGORIES.map((category) => (
@@ -121,8 +121,8 @@ export default function NewsPage() {
               onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full capitalize ${
                 selectedCategory === category
-                  ? 'bg-black text-white'
-                  : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                  ? 'bg-white text-black'
+                  : 'bg-gray-800 text-white hover:bg-gray-700'
               }`}
             >
               {category}
@@ -132,7 +132,7 @@ export default function NewsPage() {
       </div>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-black px-4 py-3 rounded mb-4">
+        <div className="bg-red-900 border border-red-700 text-white px-4 py-3 rounded mb-4">
           {error}
         </div>
       )}
@@ -153,12 +153,12 @@ export default function NewsPage() {
 
       {loading && (
         <div className="flex justify-center items-center py-8">
-          <div className="animate-spin h-8 w-8 border-4 border-black rounded-full border-t-transparent"></div>
+          <div className="animate-spin h-8 w-8 border-4 border-white rounded-full border-t-transparent"></div>
         </div>
       )}
 
       {!loading && articles.length === 0 && (
-        <div className="text-center py-8 text-gray-600">
+        <div className="text-center py-8 text-gray-300">
           No articles found. Try a different category or search term.
         </div>
       )}
