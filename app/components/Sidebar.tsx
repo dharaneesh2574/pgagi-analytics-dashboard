@@ -8,6 +8,7 @@ export default function Sidebar() {
   const navItems = [
     { name: 'Weather Dashboard', path: '/weather', icon: '🌤️' },
     { name: 'News Dashboard', path: '/news', icon: '📰' },
+    { name: 'Finance Dashboard', path: '/finance', icon: '📈' },
   ];
 
   return (
