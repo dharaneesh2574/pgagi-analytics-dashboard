@@ -1,5 +1,10 @@
 name: Preview Deployment
-
+env:
+    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    NEXT_PUBLIC_OPENWEATHER_API_KEY: ${{ secrets.NEXT_PUBLIC_OPENWEATHER_API_KEY }}
+    NEXT_PUBLIC_NEWS_API_KEY: ${{ secrets.NEXT_PUBLIC_NEWS_API_KEY }}
+    NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY: ${{ secrets.NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY }}
 on:
   push:
     branches-ignore:
@@ -33,11 +38,4 @@ jobs:
         run: npm install --global vercel@latest
 
       - name: Deploy preview
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          NEXT_PUBLIC_OPENWEATHER_API_KEY: ${{ secrets.NEXT_PUBLIC_OPENWEATHER_API_KEY }}
-          NEXT_PUBLIC_NEWS_API_KEY: ${{ secrets.NEXT_PUBLIC_NEWS_API_KEY }}
-          NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY: ${{ secrets.NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY }}
-        run: |
-          vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
