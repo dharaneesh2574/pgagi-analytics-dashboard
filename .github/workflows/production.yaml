@@ -25,14 +25,30 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
+      - name: Debug Environment Variables
+        run: |
+          echo "Checking environment variables..."
+          echo "VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID != '' && 'Set' || 'Not Set' }}"
+          echo "VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID != '' && 'Set' || 'Not Set' }}"
+          echo "VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN != '' && 'Set' || 'Not Set' }}"
+          echo "OPENWEATHER_API_KEY: ${{ secrets.NEXT_PUBLIC_OPENWEATHER_API_KEY != '' && 'Set' || 'Not Set' }}"
+          echo "NEWS_API_KEY: ${{ secrets.NEXT_PUBLIC_NEWS_API_KEY != '' && 'Set' || 'Not Set' }}"
+          echo "ALPHA_VANTAGE_API_KEY: ${{ secrets.NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY != '' && 'Set' || 'Not Set' }}"
+
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "Pulling Vercel environment information..."
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          echo "Environment pull completed"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Build Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "Starting build process..."
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          echo "Build completed"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -41,7 +57,10 @@ jobs:
           NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY: ${{ secrets.NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "Starting deployment..."
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+          echo "Deployment completed"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
