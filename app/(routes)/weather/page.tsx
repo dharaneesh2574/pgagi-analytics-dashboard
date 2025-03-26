@@ -25,10 +25,12 @@ export default function WeatherPage() {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           try {
-            const data = await getWeatherData(
-              position.coords.latitude,
-              position.coords.longitude
-            );
+            const data = await getWeatherData({
+              name: 'Your Location',
+              country: 'Unknown',
+              lat: position.coords.latitude,
+              lon: position.coords.longitude
+            });
             setWeatherData(data);
           } catch (err) {
             setError('Failed to fetch weather data for your location');
@@ -47,7 +49,7 @@ export default function WeatherPage() {
     setError(null);
 
     try {
-      const data = await getWeatherData(city.lat, city.lon);
+      const data = await getWeatherData(city);
       setWeatherData(data);
     } catch (err) {
       setError('Failed to fetch weather data');
