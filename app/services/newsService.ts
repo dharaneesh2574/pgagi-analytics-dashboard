@@ -1,4 +1,4 @@
-import { NewsCategory, NewsResponse, NewsArticle } from '../types/news';
+import { NewsCategory, NewsResponse } from '../types/news';
 
 const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY;
 const BASE_URL = 'https://newsapi.org/v2';
@@ -35,35 +35,25 @@ export async function getNews(
 }
 
 export async function searchNews(
-  category: string = 'general',
-  query: string = '',
+  query: string,
   page: number = 1,
   pageSize: number = 10
-): Promise<{ articles: NewsArticle[]; totalResults: number }> {
-  try {
-    const searchParams = new URLSearchParams({
-      category,
-      q: query,
-      page: page.toString(),
-      pageSize: pageSize.toString(),
-    });
+): Promise<NewsResponse> {
+  checkApiKey();
 
-    const response = await fetch(`/api/news?${searchParams.toString()}`);
-    
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Failed to fetch news');
+  const response = await fetch(
+    `${BASE_URL}/everything?q=${encodeURIComponent(query)}&page=${page}&pageSize=${pageSize}&apiKey=${API_KEY}`
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    if (response.status === 401) {
+      throw new Error('Invalid API key. Please check your News API key in .env.local');
     }
-
-    const data = await response.json();
-    return {
-      articles: data.articles,
-      totalResults: data.totalResults,
-    };
-  } catch (error) {
-    console.error('Error fetching news:', error);
-    throw error;
+    throw new Error(error.message || 'Failed to search news');
   }
+
+  return response.json();
 }
 
 export function formatDate(dateString: string): string {

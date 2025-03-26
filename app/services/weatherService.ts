@@ -1,4 +1,4 @@
-import { WeatherData, ForecastData, City } from '../types/weather';
+import { WeatherData, City } from '../types/weather';
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 const BASE_URL = 'https://api.openweathermap.org/data/3.0';
@@ -13,65 +13,64 @@ function checkApiKey() {
   }
 }
 
-export async function getWeatherData(city: City): Promise<WeatherData> {
-  try {
-    const response = await fetch(
-      `/api/weather?endpoint=weather&lat=${city.lat}&lon=${city.lon}`
-    );
-    
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to fetch weather data');
-    }
+export async function getWeatherData(lat: number, lon: number): Promise<WeatherData> {
+  checkApiKey();
 
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching weather data:', error);
-    throw error;
+  const response = await fetch(
+    `${BASE_URL}/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${API_KEY}`
+  );
+  
+  if (!response.ok) {
+    const error = await response.json();
+    if (response.status === 401) {
+      throw new Error('Invalid API key. Please check your OpenWeather API key in .env.local');
+    }
+    throw new Error(error.message || 'Failed to fetch weather data');
   }
+  
+  return response.json();
 }
 
 export async function searchCities(query: string): Promise<City[]> {
+  checkApiKey();
+
+  if (!query.trim()) {
+    return [];
+  }
+
   try {
-    const response = await fetch(`/api/weather?endpoint=geocoding&city=${encodeURIComponent(query)}`);
+    const url = `${GEO_URL}/direct?q=${encodeURIComponent(query)}&limit=5&appid=${API_KEY}`;
+    console.log('Making request to:', url);
+    
+    const response = await fetch(url);
     
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error || 'Failed to search cities');
+      console.error('API Error Response:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: error
+      });
+      
+      if (response.status === 401) {
+        throw new Error('Invalid API key. Please check your OpenWeather API key in .env.local');
+      }
+      throw new Error(error.message || 'Failed to fetch cities');
     }
-
+    
     const data = await response.json();
     return data.map((city: any) => ({
       name: city.name,
       country: city.country,
-      state: city.state,
       lat: city.lat,
       lon: city.lon,
     }));
   } catch (error) {
     console.error('Error searching cities:', error);
-    throw error;
+    return [];
   }
 }
 
 export function getWeatherIcon(code: string): string {
   return `https://openweathermap.org/img/wn/${code}@2x.png`;
-}
-
-export async function getForecastData(city: City): Promise<ForecastData> {
-  try {
-    const response = await fetch(
-      `/api/weather?endpoint=forecast&lat=${city.lat}&lon=${city.lon}`
-    );
-    
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to fetch forecast data');
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching forecast data:', error);
-    throw error;
-  }
 } 

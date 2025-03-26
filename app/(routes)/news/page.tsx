@@ -74,7 +74,7 @@ export default function NewsPage() {
 
     try {
       const response = searchQuery
-        ? await searchNews(selectedCategory, searchQuery)
+        ? await searchNews(searchQuery)
         : await getNews(selectedCategory);
 
       setArticles(response.articles);
@@ -92,7 +92,7 @@ export default function NewsPage() {
     setLoading(true);
     try {
       const response = searchQuery
-        ? await searchNews(selectedCategory, searchQuery, page)
+        ? await searchNews(searchQuery, page)
         : await getNews(selectedCategory, page);
 
       setArticles((prev) => [...prev, ...response.articles]);
