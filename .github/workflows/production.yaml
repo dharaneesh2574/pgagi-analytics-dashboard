@@ -28,12 +28,12 @@ jobs:
       - name: Debug Environment Variables
         run: |
           echo "Checking environment variables..."
-          echo "VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID}}"
-          echo "VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID}}"
-          echo "VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN}}"
-          echo "OPENWEATHER_API_KEY: ${{ secrets.NEXT_PUBLIC_OPENWEATHER_API_KEY}}"
-          echo "NEWS_API_KEY: ${{ secrets.NEXT_PUBLIC_NEWS_API_KEY}}"
-          echo "ALPHA_VANTAGE_API_KEY: ${{ secrets.NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY}}"
+          echo "VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID != '' && 'Set' || 'Not Set' }}"
+          echo "VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID != '' && 'Set' || 'Not Set' }}"
+          echo "VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN != '' && 'Set' || 'Not Set' }}"
+          echo "OPENWEATHER_API_KEY: ${{ secrets.NEXT_PUBLIC_OPENWEATHER_API_KEY != '' && 'Set' || 'Not Set' }}"
+          echo "NEWS_API_KEY: ${{ secrets.NEXT_PUBLIC_NEWS_API_KEY != '' && 'Set' || 'Not Set' }}"
+          echo "ALPHA_VANTAGE_API_KEY: ${{ secrets.NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY != '' && 'Set' || 'Not Set' }}"
 
       - name: Pull Vercel Environment Information
         run: |
